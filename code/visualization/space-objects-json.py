@@ -35,7 +35,7 @@ def main(file_path, min_year, max_year):
 		print 'Reading dates...'
 		outfile.write('\t"date": [')
 		for year in df['year']:
-			theta = (year - min_year) * 360 / 80
+			theta = (year - min_year) * 360 / (max_year - min_year)
 			outfile.write(str(theta) + ',')
 		outfile.write('\n\t]\n')
 		outfile.write('}')
