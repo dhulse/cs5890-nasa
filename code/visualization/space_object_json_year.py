@@ -44,18 +44,33 @@ def main(input_file_path, output_file_path, min_year, max_year):
 
 	with open(output_file_path, 'w') as outfile:
 		print 'Reading distances...'
+		lst_content = ''
 		outfile.write('{\n')
 		outfile.write('\t"distance": [')
 		for distance in df['nominal-AU-distance']:
-			outfile.write(str(distance) + ',')
-		outfile.write('\n\t],\n')
+			lst_content +=  str(distance) + ','
+		lst_content = lst_content.strip(',')
+		outfile.write(lst_content)
+		outfile.write('],\n')
+
+		print 'Reading names...'
+		lst_content = ''
+		outfile.write('\t"name": [')
+		for name in df['object']:
+			lst_content += '"%s",' % name
+		lst_content = lst_content.strip(',')
+		outfile.write(lst_content)
+		outfile.write('],\n')
 
 		print 'Reading dates...'
+		lst_content = ''
 		outfile.write('\t"date": [')
 		for date in df['datetime']:
 			theta = date.timetuple().tm_yday * 360 / 365
-			outfile.write(str(theta) + ',')
-		outfile.write('\n\t]\n')
+			lst_content += str(theta) + ','
+		lst_content = lst_content.strip(',')
+		outfile.write(lst_content)
+		outfile.write(']\n')
 		outfile.write('}')
 
 if __name__ == '__main__':
