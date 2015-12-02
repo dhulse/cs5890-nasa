@@ -1,26 +1,7 @@
-# Right now do 1970-2050
-# degrees = (YEAR - 1970) * 360 / 80
+#!/usr/bin/python
 import sys
 import pandas as pd
 from datetime import datetime as dt
-
-
-YEAR = 0
-
-month_counts = {
-	'01': 0,
-	'02': 0,
-	'03': 0,
-	'04': 0,
-	'05': 0,
-	'06': 0,
-	'07': 0,
-	'08': 0,
-	'09': 0,
-	'10': 0,
-	'11': 0,
-	'12': 0
-}
 
 def get_datetime(date_str):
 	return dt.strptime(date_str, '%Y-%b-%d')
@@ -73,5 +54,6 @@ def main(input_file_path, output_file_path, min_year, max_year):
 		outfile.write(']\n')
 		outfile.write('}')
 
+# input_file_path output_file_path, min_year, max_year
 if __name__ == '__main__':
 	main(sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4]))
