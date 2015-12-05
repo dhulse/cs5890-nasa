@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script>
+        function load_html(){
+            $("#load").show();
+            year = document.getElementById("year").value;
+            $("#graph").load(year + "_scatter").fadeIn('normal');
+            $("#load").hide();
+        }
+    </script>
+  </head>
+  <body>
+    <input type="text" id="year" />
+    <button onclick="load_html()">Go</button>
+
+    <div id="graph"><img src="loading.gif" id="load" hidden="true"></div>
+
+  </body>
+</html>
