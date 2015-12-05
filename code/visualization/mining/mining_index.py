@@ -3,8 +3,24 @@ import pandas as pd
 import numpy as np
 import mpld3
 import warnings
+import matplotlib.dates as mdates
+import datetime
 
 warnings.filterwarnings('ignore')
+
+css = """
+table
+{
+  border-collapse: collapse;
+}
+table, th, td
+{
+  padding: 5px;
+  border: 1px solid black;
+  text-align: left;
+  background-color: #FFFFFF;
+}
+"""
 
 def normalize(df, column, new_column):
     minimum = df[column].min()
@@ -16,27 +32,29 @@ df = df[['object', 'close-approach-date', 'v-relative', 'minimum-AU-distance']]
 
 normalize(df, 'v-relative', 'v-relative-normalized')
 normalize(df, 'minimum-AU-distance', 'minimum-AU-distance-normalized')
-
 df['mining-index'] = .8 * df['v-relative-normalized'] + .2 * df['minimum-AU-distance-normalized'] # lower is better
-
 df['close-approach-date'] = pd.to_datetime(df['close-approach-date'], coerce=True)
-#    df[(df['Date / Time'] >= '2000-01-01') & (df['Date / Time'] <= '2015-09-28') & (df['Date / Time'] != 'NaT')]
-df = df[(df['close-approach-date'] >= '2025-01-01') & (df['close-approach-date'] < '2026-01-01')]
-#df = df[df['mining-index'] < .16]
-#df.set_index('close-approach-date')
-print df.describe()
-df['date_int'] = df['close-approach-date'].astype(np.int64)
-df = df[['date_int', 'close-approach-date', 'mining-index', 'object', 'minimum-AU-distance-normalized', 'v-relative']]
+df = df[['close-approach-date', 'mining-index', 'object', 'minimum-AU-distance-normalized', 'v-relative']]
+print df['close-approach-date']
+for year in range(2025, 2201):
+    first_date = str(year)+'-01-01'
+    last_date = str(year)+'-12-31'
+    df_copy = df[(df['close-approach-date'] >= first_date) & (df['close-approach-date'] <= last_date)]
+    df_copy.set_index(['close-approach-date'], inplace=True)
+    fig, ax = plt.subplots(subplot_kw=dict(axisbg="#FFFFFF"), figsize=(15,7))
+    ax.text
+    scatter = ax.scatter(df_copy.index, df_copy['mining-index'], c=df_copy['mining-index'], s=20)
+    ax.set_xlabel('Month', fontsize=18)
+    ax.set_ylabel('Mining Index', fontsize=18, family='sans-serif', weight='bold')
+    ax.set_title('Mining Asteroids in ' + str(year), fontsize=24)
+    ax.set_xlim(datetime.date(year, 1, 1), datetime.date(year, 12, 31))
+    ax.set_ylim(0.0, 1.0)
+    ax.tick_params(axis='both', which='major', pad=15)
+    df_copy['formatted'] = df_copy.index
+    df_copy['formatted'] = df_copy['formatted'].apply(lambda x: x.strftime('%b %d, %Y'))
+    labels = ['<table><tr><th>Object</th><td>{0}</td></tr><tr><th>Velocity</th><td>{1} km/s</td></tr><tr><th>Distance AU</th><td>{2} AU</td></tr><tr><th>Date</th><td>{3}</td></tr></table>'.format(i[0], i[1], i[2], i[3]) for i in df_copy[['object', 'v-relative', 'minimum-AU-distance-normalized', 'formatted']].as_matrix()]
+    tooltip = mpld3.plugins.PointHTMLTooltip(scatter, labels=labels, css=css)
+    mpld3.plugins.connect(fig, tooltip)
+    mpld3.save_html(fig, str(year)+'_scatter') # works!!!!
+    #mpld3.show()
 
-fig, ax = plt.subplots(subplot_kw=dict(axisbg="#FFFFFF"))
-scatter = ax.scatter(df['date_int'], df['mining-index'], c=df['mining-index'] * 100)
-
-for i in df[['object', 'v-relative', 'minimum-AU-distance-normalized']].as_matrix():
-    print i
-
-labels = ['<h3>Object: {0}</h3><h3>Velocity: {1}</h3><h3>Distance AU: {2}</h3>'.format(i[0], i[1], i[2]) for i in df[['object', 'v-relative', 'minimum-AU-distance-normalized']].as_matrix()]
-
-tooltip = mpld3.plugins.PointHTMLTooltip(scatter, labels=labels)
-mpld3.plugins.connect(fig, tooltip)
-# try making one for each year and then writing it to HTML, from there we will load it as the webpages ask
-mpld3.show()
