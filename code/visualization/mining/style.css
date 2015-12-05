@@ -1,0 +1,11 @@
+#graph{
+    /*display: inline-block;*/
+}
+
+text{
+    font-size: 12px;
+}
+
+text.mpld3-text{
+    font-size: 24px;
+}
