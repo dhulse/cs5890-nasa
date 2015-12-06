@@ -46,8 +46,8 @@ for year in range(2025, 2201):
 
     scatter = ax.scatter(df_copy.index, df_copy['mining-index'], c=df_copy['mining-index'], s=30)
     ax.set_xlabel('Month', fontsize=18)
-    ax.set_ylabel('Mining Index', fontsize=18, family='sans-serif', weight='bold')
-    ax.set_title('Mining Asteroids in ' + str(year), fontsize=24)
+    ax.set_ylabel('Extraction Index', fontsize=18, family='sans-serif', weight='bold')
+    ax.set_title('Element Extraction from Close Asteroids in ' + str(year), fontsize=24)
     ax.set_xlim(datetime.date(year, 1, 1), datetime.date(year, 12, 31))
     ax.set_ylim(0.0, 1.0)
 
