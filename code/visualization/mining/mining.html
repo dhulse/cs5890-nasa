@@ -7,9 +7,9 @@
     <link href="style.css" rel="stylesheet" type="text/css">
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script>
-        $(document).ready(function() {
+        /*$(document).ready(function() {
             $("#graph").load("2025_scatter").fadeIn('normal');
-        });
+        });*/
 
         function load_html(){
             $("#load").show();
@@ -34,15 +34,10 @@
             
         </ul>
     </div>
-    <div>
-        <form class="pure-form">
-            <fieldset>
-                <input placeholder="Year" type="text" id="year" />
-                <button class="pure-button pure-button-primary" onclick="load_html()">Show</button>
-            </fieldset>
-        </form>
+    <div class='inputYear'>
+        <input placeholder="Year" type="text" id="year" />
+        <button class="pure-button pure-button-primary" onclick="load_html()">Show</button>
     </div>
-
     <div id="graph"><img src="loading.gif" id="load" hidden="true"></div>
 
   </body>
