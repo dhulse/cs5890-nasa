@@ -43,7 +43,7 @@
         var y = year;
         
         if (y) {
-          axios.get('/code/visualization/space_object_files/' + y + '.json').then(
+          axios.get('/cs5890-nasa/code/visualization/space_object_files/' + y + '.json').then(
             function(response) {
               self.states = response.data;
               var trace6 = {
