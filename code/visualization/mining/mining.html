@@ -8,7 +8,7 @@
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script>
         $(document).ready(function() {
-            $("#graph").load("2025_scatter").fadeIn('normal');
+            $("#graph").load("avg_scatter");
         });
 
         function load_html(){
@@ -17,8 +17,7 @@
             if (parseInt(year) < 2025 || parseInt(year) > 2200){
                 alert('Please input a year between 2025 and 2200');
             } else {
-                $("#graph").load(year + "_scatter").fadeIn('normal');
-                $("#load").hide();
+                $("#graph").load(year + "_scatter");
             }
         }
     </script>
