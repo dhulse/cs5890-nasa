@@ -1,0 +1,127 @@
+<head>
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+  
+  <!-- Numeric.js -->
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+  <!-- Plotly.js -->
+  <script src="/code/visualization/distance/plotly.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/2.3.11/riot+compiler.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/2.3.11/riot+compiler.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.7.0/axios.min.js"></script>
+  <style>
+    select {
+      width: 100%;
+    }
+    .pure-menu-item {
+      height: auto;
+    }
+  </style>
+  <script type="riot/tag">
+    <year-selector>
+      <yield/>
+      <div class="pure-g">
+        <div class="pure-u-1-5"></div>
+        <div class="pure-u-3-5 pure-form">
+          <h3>Select Year</h3>
+          <select onchange={ selectChangeYear } id="year">
+            <option each={ year, i in this.years } value={ year }>{ year }</option>
+          </select>
+          <p>Mouse over chart for more information.</p>
+        </div>
+      </div>
+      <div id="myDiv" style="width: 500px; height: 450px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+      
+      var self = this;
+      
+      self.selectChangeYear = function () {
+        if (self.year.value) {
+          self.changeYear(self.year.value);
+        }
+      }
+      
+      self.changeYear = function (year) {
+        var y = year;
+        
+        if (y) {
+          axios.get('/code/visualization/space_object_files/' + y + '.json').then(
+            function(response) {
+              self.states = response.data;
+              var trace6 = {
+                r: response.data.distance,
+                t: response.data.date,
+                text: response.data.name,
+                hoverinfo: 'none',
+                mode: 'markers',
+                marker: {
+                  color: 'rgb(2,65,230)',
+                  size: 90,
+                  line: {color: 'white'},
+                  opacity: 0.7
+                },
+                type: 'scatter'
+              };
+
+              var data = [trace6];
+
+              var layout = {
+                title: self.year.value + ' Closest Approaches by Astronomical Units',
+                font: {
+                  color: '#000000'
+                },
+                font: {size: 15},
+                plot_bgcolor: 'rgb(223, 223, 223)',
+                angularaxis: {
+                  tickcolor: 'rgb(253,253,253)',
+                  ticksLabels: ['January', 'April', 'July', 'October']
+                },
+                width: 1250,
+                height: 750,
+                showlegend: false,
+                orientation: -90,
+                radialaxis: {
+                  
+                  
+                }
+              };
+
+              Plotly.plot('myDiv', data, layout);
+            }
+          ).catch(
+            function(error) {
+              console.log(error);
+            }
+          );
+        }
+      };
+      
+      
+      function range(start, count) {
+        return Array.apply(0, Array(count))
+                    .map(function (element, index) { 
+                             return index + start;  
+                         });
+      }
+      
+      self.years = range(1970, 80);
+      self.changeYear("1970");
+    </year-selector>
+  </script>
+</head>
+
+<body>
+    <year-selector>
+      <div class="pure-menu pure-menu-horizontal">
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item"><a href="/cs5890-nasa" class="pure-menu-link">Home</a></li>
+          <li class="pure-menu-item"><a href="/cs5890-nasa/code/visualization/mining" class="pure-menu-link">Element Extraction</a></li>
+          <li class="pure-menu-item"><a href="/cs5890-nasa/code/visualization/distance" class="pure-menu-link">Closest Approach</a></li>
+          <li class="pure-menu-item"><a href="http://neo.jpl.nasa.gov/cgi-bin/neo_ca" class="pure-menu-link">Data Set</a></li>
+          <li class="pure-menu-item"><a href="https://github.com/dhulse/cs5890-nasa" class="pure-menu-link">Repository</a></li>
+        </ul>
+    </div>
+    </year-selector>
+    <script>
+      riot.mount('*')
+    </script>
+  </div>
+</body>
