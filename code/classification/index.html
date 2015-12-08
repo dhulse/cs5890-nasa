@@ -20,15 +20,15 @@
     </div>
     <div class="pure-g">
       <div class="pure-u-1-8"></div>
-      <div class="pure-u-7-8">
+      <div class="pure-u-3-4">
         <h1>Classification of Near Earth Objects</h1>
 
         <script type="riot/tag">
             <predictor>
-                <form>
-                    <input class="pure-input-4-5" placeholder="Distance (AU)" type="number" name="distance" step="0.1" min=0 max=1 /><!-- min=2025 max=2200/>-->
-                    <input class="pure-input-4-5" placeholder="Velocity (km/s)" type="number" name="velocity" step="0.1" min=0 max=100 />
-                    <input class="pure-input-4-5" placeholder="Magnitude" type="number" name="magnitude" step="0.1" min=9 max=35 />
+                <form class="pure-form">
+                    <input class="pure-input-1-4" placeholder="Distance (AU)" type="number" name="distance" step="0.1" min=0 max=1 /><!-- min=2025 max=2200/>-->
+                    <input class="pure-input-1-4" placeholder="Velocity (km/s)" type="number" name="velocity" step="0.1" min=0 max=100 />
+                    <input class="pure-input-1-4" placeholder="Magnitude" type="number" name="magnitude" step="0.1" min=9 max=35 />
                     <button type="submit" class="pure-button pure-button-primary" onclick="{ predict }">Predict</button>
                 </form>
                 <div each={ pv, i in this.predictionValues }>{ pv } - { i }</div>
