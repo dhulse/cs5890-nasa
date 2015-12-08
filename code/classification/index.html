@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <script src="tree.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/2.3.11/riot+compiler.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/2.3.11/riot+compiler.min.js"></script>
+</head>
+<body>
+	 <div class="pure-menu pure-menu-horizontal">
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item"><a href="/cs5890-nasa" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="/cs5890-nasa/code/visualization/mining" class="pure-menu-link">Element Extraction</a></li>
+            <li class="pure-menu-item"><a href="/cs5890-nasa/code/visualization/distance" class="pure-menu-link">Closest Approach</a></li>
+            <li class="pure-menu-item"><a href="/cs5890-nasa/code/classification" class="pure-menu-link">Classification</a></li>
+            <li class="pure-menu-item"><a href="http://neo.jpl.nasa.gov/cgi-bin/neo_ca" class="pure-menu-link">Data Set</a></li>
+            <li class="pure-menu-item"><a href="https://github.com/dhulse/cs5890-nasa" class="pure-menu-link">Repository</a></li>
+        </ul>
+    </div>
+    <div class="pure-g">
+      <div class="pure-u-1-5"></div>
+      <div class="pure-u-3-5">
+        <h1>Classification of Near Earth Objects</h1>
+
+
+        <script type="riot/tag">
+            <predictor>
+                <form class="pure-form" action="javascript:void(0);">
+                    <input class="pure-input-1-4" placeholder="Distance (AU)" type="number" name="distance" step="0.1" min=0 max=1 /><!-- min=2025 max=2200/>-->
+                    <input class="pure-input-1-4" placeholder="Velocity (km/s)" type="number" name="velocity" step="0.1" min=0 max=100 />
+                    <input class="pure-input-1-4" placeholder="Magnitude" type="number" name="magnitude" step="0.1" min=9 max=35 />
+                    <button type="submit" class="pure-button pure-button-primary" onclick="{ predict }">Predict</button>
+                </form>
+                <h2 if={ predictionValues }>Percent Chance</h2>
+                <p each={ pv, i in predictionValues }>{ pv } - { i }%</p>
+                var self = this;
+                
+                self.predict = function () {
+                  if (self.distance.value && self.velocity.value && self.magnitude.value) {
+                    self.predictionValues = predict_type(self.distance.value, self.velocity.value, self.magnitude.value);
+                    self.update();
+                  }
+                }
+            </predictor>
+        </script>
+        <predictor></predictor>
+        <script>
+          riot.mount('*')
+        </script>
+      </div>        
+    </div>
+</body>
+</html>
