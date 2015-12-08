@@ -19,8 +19,8 @@
         </ul>
     </div>
     <div class="pure-g">
-      <div class="pure-u-1-8"></div>
-      <div class="pure-u-3-4">
+      <div class="pure-u-1-5"></div>
+      <div class="pure-u-3-5">
         <h1>Classification of Near Earth Objects</h1>
 
 
@@ -32,7 +32,8 @@
                     <input class="pure-input-1-4" placeholder="Magnitude" type="number" name="magnitude" step="0.1" min=9 max=35 />
                     <button type="submit" class="pure-button pure-button-primary" onclick="{ predict }">Predict</button>
                 </form>
-                <p each={ pv, i in this.predictionValues }>{ pv } - { i }</p>
+                <h2 if={ predictionValues }>Percent Chance</h2>
+                <p each={ pv, i in predictionValues }>{ pv } - { i }%</p>
                 var self = this;
                 
                 self.predict = function () {
