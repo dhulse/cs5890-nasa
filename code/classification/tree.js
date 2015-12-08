@@ -7,7 +7,7 @@ function predict_shape(distance, velocity, size) {
 
   while(!tree.value) {
     var rule = tree.rule;
-    var operands = tree.split("<=");
+    var operands = tree.rule.split("<=");
     var idx  = parseInt(operands[0].trim());
     var split_value = parseFloat(operands[1].trim());
     if (attributes[idx] <= split_value) {
