@@ -1,7 +1,3 @@
-var attributes = {
-  '1'
-};
-
 function predict_shape(distance, velocity, size) {
   var attributes = {
     '0': distance,
@@ -12,17 +8,24 @@ function predict_shape(distance, velocity, size) {
   while(!tree.value) {
     var rule = tree.rule;
     var operands = tree.split("<=");
-    var idx  = operands[0].trim()
+    var idx  = parseInt(operands[0].trim());
+    var split_value = parseFloat(operands[1].trim());
+    if (attributes[idx] <= split_value) {
+      tree = tree.left;
+    }
+    else {
+      tree = tree.right;
+    }
   }
 
   return {
-    'AMO': '',
-    'APO': '',
-    'ATE': '',
-    'IEO': '',
-    'ETc': '',
-    'HTc': '',
-    'JFc': ''
+    'AMO': tree.value[0],
+    'APO': tree.value[1],
+    'ATE': tree.value[2],
+    'IEO': tree.value[3],
+    'ETc': tree.value[4],
+    'HTc': tree.value[5],
+    'JFc': tree.value[6]
   };
 }
 
