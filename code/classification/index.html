@@ -4,6 +4,8 @@
 	<meta charset="utf-8">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <script src="tree.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/2.3.11/riot+compiler.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/2.3.11/riot+compiler.min.js"></script>
 </head>
 <body>
 	 <div class="pure-menu pure-menu-horizontal">
@@ -21,11 +23,29 @@
       <div class="pure-u-7-8">
         <h1>Classification of Near Earth Objects</h1>
 
-        <input class="pure-input-4-5" placeholder="Distance (AU)" type="number" id="distance" min=0 max=1 />
-        <input class="pure-input-4-5" placeholder="Velocity (km/s)" type="number" id="velocity" min=0 max=100 />
-        <input class="pure-input-4-5" placeholder="Magnitude" type="number" id="magnitude" min=9 max=35 />
-        <button class="pure-button pure-button-primary" onclick="">Predict</button>
-
+        <script type="riot/tag">
+            <predictor>
+                <form>
+                    <input class="pure-input-4-5" placeholder="Distance (AU)" type="number" name="distance" step="0.1" min=0 max=1 /><!-- min=2025 max=2200/>-->
+                    <input class="pure-input-4-5" placeholder="Velocity (km/s)" type="number" name="velocity" step="0.1" min=0 max=100 />
+                    <input class="pure-input-4-5" placeholder="Magnitude" type="number" name="magnitude" step="0.1" min=9 max=35 />
+                    <button type="submit" class="pure-button pure-button-primary" onclick="{ predict }">Predict</button>
+                </form>
+                <div each={ pv, i in this.predictionValues }>{ pv } - { i }</div>
+                var self = this;
+                
+                self.predict = function () {
+                  if (self.distance.value && self.velocity.value && self.magnitude.value) {
+                    self.predictionValues = predict_shape(self.distance.value, self.velocity.value, self.magnitude.value);
+                    self.update();
+                  }
+                }
+            </predictor>
+        </script>
+        <predictor></predictor>
+        <script>
+          riot.mount('*')
+        </script>
       </div>        
     </div>
 </body>
