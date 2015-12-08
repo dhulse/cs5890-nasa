@@ -75,27 +75,28 @@ function predict_type(distance, velocity, size) {
     '2': size_discretization(size)
   };
 
-  while(!tree.value) {
-    var rule = tree.rule;
-    var operands = tree.rule.split("<=");
+  var temp = tree;
+  while(!temp.value) {
+    var rule = temp.rule;
+    var operands = temp.rule.split("<=");
     var idx  = parseInt(operands[0].trim());
     var split_value = parseFloat(operands[1].trim());
     if (attributes[idx] <= split_value) {
-      tree = tree.left;
+      temp = temp.left;
     }
     else {
-      tree = tree.right;
+      temp = temp.right;
     }
   }
 
   return {
-    'AMO': Math.round(tree.value[0] / parseInt(tree.samples) * 100),
-    'APO': Math.round(tree.value[1] / parseInt(tree.samples) * 100),
-    'ATE': Math.round(tree.value[2] / parseInt(tree.samples) * 100),
-    'IEO': Math.round(tree.value[3] / parseInt(tree.samples) * 100),
-    'ETc': Math.round(tree.value[4] / parseInt(tree.samples) * 100),
-    'HTc': Math.round(tree.value[5] / parseInt(tree.samples) * 100),
-    'JFc': Math.round(tree.value[6] / parseInt(tree.samples) * 100)
+    'AMO': Math.round(temp.value[0] / parseInt(temp.samples) * 100),
+    'APO': Math.round(temp.value[1] / parseInt(temp.samples) * 100),
+    'ATE': Math.round(temp.value[2] / parseInt(temp.samples) * 100),
+    'IEO': Math.round(temp.value[3] / parseInt(temp.samples) * 100),
+    'ETc': Math.round(temp.value[4] / parseInt(temp.samples) * 100),
+    'HTc': Math.round(temp.value[5] / parseInt(temp.samples) * 100),
+    'JFc': Math.round(temp.value[6] / parseInt(temp.samples) * 100)
   };
 }
 
