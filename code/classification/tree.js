@@ -68,6 +68,7 @@ function size_discretization(size) {
 }
 
 function predict_type(distance, velocity, size) {
+
   var attributes = {
     '0': distance_discretization(distance),
     '1': velocity_discretization(velocity),
