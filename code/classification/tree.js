@@ -1,13 +1,82 @@
-function predict_shape(distance, velocity, size) {
+function distance_discretization(distance) {
+  if (distance <= 0.1) {
+    return 0;
+  }
+  else if (distance > 0.1 && distance <= 0.2) {
+    return 1;
+  }
+  else if (distance > 0.2 && distance <= 0.3) { 
+    return 2;
+  }
+  else if (distance > 0.3 && distance <= 0.4) {
+    return 3;
+  }
+  else if (distance > 0.4 && distance <= 0.5) {
+    return 5;
+  }
+  else {
+    return 6;
+  }
+}
+
+function velocity_discretization(vel) {
+  if (vel <= 5) {
+    return 0;
+  }
+  else if (vel > 5 && vel <= 10 ){
+    return 1;
+  }
+  else if (vel > 10 && vel <= 15) {
+    return 2;
+  }
+  else if (vel > 15 && vel <= 20) {
+    return 3;
+  }
+  else if (vel > 20 && vel <= 25) {
+    return 4;
+  }
+  else if (vel > 25 && vel <= 30) {
+    return 5;
+  }
+  else {
+    return 6;
+  }
+}
+
+function size_discretization(size) {
+  if (size <= 5) {
+    return 0;
+  }
+  else if (size > 5 && size <= 10) {
+    return 1;
+  }
+  else if (size > 10 && size <= 15) {
+    return 2;
+  }
+  else if (size > 15 && size <= 20) {
+    return 3;
+  }
+  else if (size > 20 && size <= 25) {
+    return 4;
+  }
+  else if (size > 25 && size <= 30) {
+    return 5;
+  }
+  else {
+    return 6;
+  }
+}
+
+function predict_type(distance, velocity, size) {
   var attributes = {
-    '0': distance,
-    '1': velocity,
-    '2': size
+    '0': distance_discretization(distance),
+    '1': velocity_discretization(velocity),
+    '2': size_discretization(size)
   };
 
   while(!tree.value) {
     var rule = tree.rule;
-    var operands = tree.split("<=");
+    var operands = rule.split("<=");
     var idx  = parseInt(operands[0].trim());
     var split_value = parseFloat(operands[1].trim());
     if (attributes[idx] <= split_value) {
