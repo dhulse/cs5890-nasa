@@ -26,18 +26,18 @@
 
         <script type="riot/tag">
             <predictor>
-                <form class="pure-form">
+                <form class="pure-form" action="javascript:void(0);">
                     <input class="pure-input-1-4" placeholder="Distance (AU)" type="number" name="distance" step="0.1" min=0 max=1 /><!-- min=2025 max=2200/>-->
                     <input class="pure-input-1-4" placeholder="Velocity (km/s)" type="number" name="velocity" step="0.1" min=0 max=100 />
                     <input class="pure-input-1-4" placeholder="Magnitude" type="number" name="magnitude" step="0.1" min=9 max=35 />
                     <button type="submit" class="pure-button pure-button-primary" onclick="{ predict }">Predict</button>
                 </form>
-                <div each={ pv, i in this.predictionValues }>{ pv } - { i }</div>
+                <p each={ pv, i in this.predictionValues }>{ pv } - { i }</p>
                 var self = this;
                 
                 self.predict = function () {
                   if (self.distance.value && self.velocity.value && self.magnitude.value) {
-                    self.predictionValues = predict_shape(self.distance.value, self.velocity.value, self.magnitude.value);
+                    self.predictionValues = predict_type(self.distance.value, self.velocity.value, self.magnitude.value);
                     self.update();
                   }
                 }
