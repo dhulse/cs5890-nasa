@@ -2,11 +2,11 @@ var attributes = {
   '1'
 };
 
-function predict_shape(distance, velocity, shape) {
+function predict_shape(distance, velocity, size) {
   var attributes = {
     '0': distance,
     '1': velocity,
-    '2': shape
+    '2': size
   };
 
   while(!tree.value) {
