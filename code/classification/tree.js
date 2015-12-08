@@ -67,10 +67,7 @@ function size_discretization(size) {
   }
 }
 
-function predict_type() {
-  var distance = document.getElementById('distance');
-  var velocity = document.getElementById('velocity');
-  var size = document.getElementById('magnitude');
+function predict_type(distance, velocity, size) {
 
   var attributes = {
     '0': distance_discretization(distance),
@@ -80,7 +77,7 @@ function predict_type() {
 
   while(!tree.value) {
     var rule = tree.rule;
-    var operands = rule.split("<=");
+    var operands = tree.rule.split("<=");
     var idx  = parseInt(operands[0].trim());
     var split_value = parseFloat(operands[1].trim());
     if (attributes[idx] <= split_value) {
