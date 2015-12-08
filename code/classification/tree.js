@@ -89,13 +89,13 @@ function predict_type(distance, velocity, size) {
   }
 
   return {
-    'AMO': tree.value[0],
-    'APO': tree.value[1],
-    'ATE': tree.value[2],
-    'IEO': tree.value[3],
-    'ETc': tree.value[4],
-    'HTc': tree.value[5],
-    'JFc': tree.value[6]
+    'AMO': Math.round(tree.value[0] / parseInt(tree.samples) * 100),
+    'APO': Math.round(tree.value[1] / parseInt(tree.samples) * 100),
+    'ATE': Math.round(tree.value[2] / parseInt(tree.samples) * 100),
+    'IEO': Math.round(tree.value[3] / parseInt(tree.samples) * 100),
+    'ETc': Math.round(tree.value[4] / parseInt(tree.samples) * 100),
+    'HTc': Math.round(tree.value[5] / parseInt(tree.samples) * 100),
+    'JFc': Math.round(tree.value[6] / parseInt(tree.samples) * 100)
   };
 }
 
