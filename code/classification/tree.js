@@ -14,6 +14,16 @@ function predict_shape(distance, velocity, size) {
     var operands = tree.split("<=");
     var idx  = operands[0].trim()
   }
+
+  return {
+    'AMO': '',
+    'APO': '',
+    'ATE': '',
+    'IEO': '',
+    'ETc': '',
+    'HTc': '',
+    'JFc': ''
+  };
 }
 
 var tree = {
