@@ -67,7 +67,11 @@ function size_discretization(size) {
   }
 }
 
-function predict_type(distance, velocity, size) {
+function predict_type() {
+  var distance = document.getElementById('distance');
+  var velocity = document.getElementById('velocity');
+  var size = document.getElementById('magnitude');
+
   var attributes = {
     '0': distance_discretization(distance),
     '1': velocity_discretization(velocity),
