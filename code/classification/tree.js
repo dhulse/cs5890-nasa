@@ -20,7 +20,7 @@ function distance_discretization(distance) {
 }
 
 function velocity_discretization(vel) {
-  if vel <= 5 {
+  if (vel <= 5) {
     return 0;
   }
   else if (vel > 5 && vel <= 10 ){
